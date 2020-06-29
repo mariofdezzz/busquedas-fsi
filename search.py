@@ -118,6 +118,9 @@ def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
 
+def B_and_B_graph_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, BnBQueue())
 
 
 # _____________________________________________________________________________
