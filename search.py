@@ -4,7 +4,6 @@ The way to use this code is to subclass Problem to create a class of problems,
 then create problem instances and solve them with calls to the various search
 functions."""
 
-
 from utils import *
 import random
 import sys
@@ -68,7 +67,7 @@ class Node:
     def __init__(self, state, parent=None, action=None, path_cost=0):
         """Create a search tree Node, derived from a parent by an action."""
         update(self, state=state, parent=parent, action=action,
-               path_cost=path_cost, depth=0)
+               path_cost=path_cost, depth=0, visited=0, generated=0)
         if parent:
             self.depth = parent.depth + 1
 
@@ -102,6 +101,8 @@ def graph_search(problem, fringe):
     while fringe:
         node = fringe.pop()
         if problem.goal_test(node.state):
+            node.generated = fringe.generated
+            node.visited = fringe.visited
             return node
         if node.state not in closed:
             closed[node.state] = True
@@ -118,9 +119,15 @@ def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
 
-def B_and_B_graph_search(problem):
+
+def BandB_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, BnBQueue())
+
+
+def BandB_Sub_graph_search(problem):
+    """Search the deepest nodes in the search tree first. [p 74]"""
+    return graph_search(problem, BnBSubQueue(problem))
 
 
 # _____________________________________________________________________________
